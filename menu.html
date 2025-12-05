@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistema Estelar – Menú Principal</title>
+
+<style>
+    body {
+        margin:0;
+        background:black;
+        font-family:"Consolas","Courier New",monospace;
+        color:#b9aaff;
+        overflow:hidden;
+    }
+
+    /* Fondo con TU imagen original */
+    #bg-img {
+        position:fixed;
+        inset:0;
+        background:url("../estrellaslol/images/starbackground.png") no-repeat center center/cover;
+        filter:brightness(0.6);
+        z-index:-2;
+    }
+
+    /* Nebulosa morada animada */
+    #nebulosa {
+        position:fixed;
+        inset:0;
+        background:radial-gradient(circle at 50% 50%, rgba(160,0,255,0.35), transparent 70%);
+        animation:pulsar 9s ease-in-out infinite;
+        z-index:-1;
+    }
+
+    @keyframes pulsar {
+        0% { transform:scale(1); opacity:.4; }
+        50% { transform:scale(1.12); opacity:.65; }
+        100% { transform:scale(1); opacity:.4; }
+    }
+
+    /* Ventana principal */
+    #window {
+        width:90%;
+        max-width:700px;
+        margin:70px auto;
+        padding:28px;
+        background:rgba(30,0,55,0.55);
+        border-radius:20px;
+        border:3px solid #c27bff;
+        box-shadow:0 0 28px #c27bff88;
+        backdrop-filter:blur(6px);
+        animation:pop .8s ease-out;
+    }
+
+    @keyframes pop {
+        0% { opacity:0; transform:scale(0.8); filter:blur(8px); }
+        100% { opacity:1; transform:scale(1); filter:blur(0); }
+    }
+
+    /* Título estilo retro-espacial */
+    h1 {
+        text-align:center;
+        font-size:28px;
+        margin-bottom:20px;
+        color:#d7c0ff;
+        text-shadow:0 0 10px #a449ff;
+        letter-spacing:1px;
+    }
+
+    .line {
+        width:100%;
+        height:2px;
+        background:#c27bff55;
+        margin:15px 0 22px 0;
+    }
+
+    /* BOTONES */
+    .menu-btn {
+        display:block;
+        width:100%;
+        padding:15px;
+        margin:14px 0;
+        background:rgba(60,0,90,0.7);
+        color:#e1d3ff;
+        border:2px solid #c27bff;
+        border-radius:12px;
+        font-size:18px;
+        cursor:pointer;
+        text-align:center;
+        letter-spacing:1px;
+        transition:.22s;
+        box-shadow:0 0 15px #c27bff33;
+    }
+
+    .menu-btn:hover {
+        background:rgba(120,0,180,0.8);
+        transform:scale(1.04);
+        box-shadow:0 0 22px #c27bffaa;
+    }
+
+    /* Información inferior */
+    #footer {
+        margin-top:25px;
+        text-align:center;
+        color:#d7c0ff88;
+        font-size:14px;
+    }
+
+    /* CRT Scanlines */
+    #scan {
+        pointer-events:none;
+        position:fixed;
+        inset:0;
+        background:repeating-linear-gradient(
+            to bottom,
+            rgba(255,255,255,0.06) 0px,
+            rgba(255,255,255,0.03) 2px,
+            rgba(0,0,0,0) 4px
+        );
+        opacity:.45;
+        mix-blend-mode:overlay;
+        z-index:50;
+    }
+
+</style>
+</head>
+
+<body>
+
+<div id="bg-img"></div>
+<div id="nebulosa"></div>
+
+<div id="window">
+    <h1>SISTEMA ESTELAR – MENÚ</h1>
+    <div class="line"></div>
+
+    <button class="menu-btn" onclick="go('constelaciones_zodiaco/principal.html')">
+        CONSTELACIONES
+    </button>
+
+    <button class="menu-btn" onclick="go('agujeros_negros/principal2.html')">
+        AGUJEROS NEGROS
+    </button>
+
+    <button class="menu-btn" onclick="go('estrellaslol/principal3v2.html')">
+        ESTRELLAS
+    </button>
+
+    <button class="menu-btn" onclick="go('asteroides/principal1415.html')">
+        ASTEROIDES
+    </button>
+
+    <button class="menu-btn" onclick="go('pizza_planeta/index.html')">
+        PLANETAS
+    </button>
+
+    <div id="footer">
+        PC POM-2 // Sistema Estelar Experimental
+    </div>
+</div>
+
+<div id="scan"></div>
+
+<script>
+function go(pag) {
+    window.location.href = pag;
+}
+</script>
+
+</body>
+</html>

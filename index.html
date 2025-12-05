@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistema Estelar – PC POM-2</title>
+
+<style>
+    body {
+        margin:0;
+        padding:0;
+        font-family: "Consolas", "Courier New", monospace;
+        background:black;
+        color:#7fcfff;
+        overflow:hidden;
+    }
+
+    /* Fondo con tu imagen */
+    #background {
+        position:fixed;
+        inset:0;
+        background: url("estrellaslol/images/starbackground.png") no-repeat center center / cover;
+        filter:brightness(0.65);
+        z-index:-1;
+    }
+
+    /* Nebulosa animada */
+    .nebulosa {
+        position:fixed;
+        inset:0;
+        background:radial-gradient(circle at 50% 50%, rgba(140,0,255,0.35), transparent 70%);
+        animation: pulsar 8s ease-in-out infinite;
+        z-index:-1;
+    }
+
+    @keyframes pulsar {
+        0% { transform:scale(1); opacity:.45; }
+        50% { transform:scale(1.15); opacity:.65; }
+        100% { transform:scale(1); opacity:.45; }
+    }
+
+    /* Contenedor de la pantalla */
+    #screen {
+        position:absolute;
+        top:50%;
+        left:50%;
+        transform:translate(-50%, -50%);
+        width:90%;
+        max-width:600px;
+        padding:30px;
+        border-radius:18px;
+        border:3px solid #ffffff;
+        background:rgba(40,0,60,0.6);
+        backdrop-filter:blur(5px);
+        box-shadow:0 0 25px #7200aacc;
+        opacity:0;
+        animation: turnOn 1.7s forwards;
+    }
+
+    @keyframes turnOn {
+        0% { opacity:0; filter:blur(12px); }
+        50% { opacity:0.4; filter:blur(4px); }
+        100% { opacity:1; filter:blur(0px); }
+    }
+
+    /* Texto tipo arranque */
+    #terminal {
+        font-size:18px;
+        line-height:1.4em;
+        min-height:160px;
+        white-space:pre-line;
+    }
+
+    /* Botón */
+    .btn {
+        display:none; /* aparece después */
+        margin:25px auto 0;
+        padding:12px 25px;
+        border-radius:14px;
+        background:#003d66;
+        color:#7fcfff;
+        border:2px solid #4fbaff;
+        font-size:18px;
+        cursor:pointer;
+        transition:.25s;
+        box-shadow:0 0 12px #4fbaff44;
+    }
+
+    .btn:hover {
+        background:#00588c;
+        transform:scale(1.05);
+        box-shadow:0 0 18px #4fbaffaa;
+    }
+
+    /* Scanlines */
+    #scanlines {
+        pointer-events:none;
+        position:fixed;
+        inset:0;
+        background:repeating-linear-gradient(
+            to bottom,
+            rgba(255,255,255,0.06) 0px,
+            rgba(255,255,255,0.03) 2px,
+            rgba(0,0,0,0) 4px
+        );
+        mix-blend-mode:overlay;
+        z-index:50;
+        opacity:.55;
+    }
+</style>
+</head>
+
+<body>
+
+<div id="background"></div>
+<div class="nebulosa"></div>
+
+<div id="screen">
+    <div id="terminal"></div>
+    <button class="btn" onclick="entrar()">ENTRAR AL SISTEMA</button>
+</div>
+
+<div id="scanlines"></div>
+
+<script>
+    const terminal = document.getElementById("terminal");
+    const boton = document.querySelector(".btn");
+
+    const lines = [
+        "> Inicializando Sistema Estelar...",
+        "> Cargando librerías astronómicas...",
+        "> Verificando parámetros cuánticos...",
+        "> Sincronizando sensores ópticos...",
+        "> Analizando espectros galácticos...",
+        "> Sistema central: ONLINE",
+        "> PC POM-2 listo para operar."
+    ];
+
+    let index = 0;
+
+    function typeLine() {
+        if (index < lines.length) {
+            terminal.textContent += lines[index] + "\n";
+            index++;
+            setTimeout(typeLine, 700);
+        } else {
+            setTimeout(() => {
+                boton.style.display = "block";
+            }, 600);
+        }
+    }
+
+    setTimeout(typeLine, 900);
+
+    function entrar() {
+        window.location.href = "menu.html";
+    }
+</script>
+
+</body>
+</html>
