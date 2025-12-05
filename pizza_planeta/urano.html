@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles: Urano</title>
+    <style>
+        /* CSS GENERAL (Se copia del index.html para que el estilo sea idéntico) */
+        body {
+            background-color: #2f1561; 
+            color: #e0f7fa; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            background-image: radial-gradient(circle, #ffffff 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: starMove 300s linear infinite; 
+        }
+
+        @keyframes starMove {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 100%; }
+        }
+
+        .header {
+            padding: 40px 20px;
+            background: linear-gradient(to bottom, #29036b, #371b4f); 
+            border-bottom: 2px solid #18148c; 
+        }
+
+        .header h1 {
+            font-size: 3em;
+            color: #ffcc00; 
+            text-shadow: 0 0 10px #ffcc00, 0 0 20px rgba(255, 204, 0, 0.5);
+        }
+
+        /* CSS ESPECÍFICO PARA LA VISTA DE DETALLE */
+        .detail-container {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 40px;
+            background-color: rgba(0, 0, 0, 0.3); 
+            box-shadow: 0 0 50px #81d4fa33; /* Sombra Celeste/Cian */
+            border-radius: 20px;
+            text-align: left; 
+        }
+        
+        .detail-container.urano {
+             box-shadow: 0 0 50px rgba(129, 212, 250, 0.5); 
+        }
+
+        .detail-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            display: block; 
+            margin: 0 auto 30px auto; 
+        }
+        
+        .detail-container h2 {
+            color: #80deea; /* Color Cian suave */
+            font-size: 2.5em;
+            margin-top: 0;
+            border-bottom: 2px solid #80deea;
+            padding-bottom: 10px;
+        }
+        
+        .detail-container p {
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        /* ESTILO DEL BOTÓN DE REGRESO */
+        .back-button {
+            display: inline-block; 
+            padding: 12px 25px; 
+            background-color: #56148c; 
+            color: #ffcc00; 
+            border-radius: 8px; 
+            margin-top: 30px; 
+            text-decoration: none; 
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        
+        .back-button:hover {
+            background-color: #790387;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>🥶 Urano: El Gigante de Hielo Inclinado</h1>
+        <p>El planeta que gira sobre su eje de lado, con un tono azul-verdoso.</p>
+    </div>
+
+    <div class="detail-container urano">
+        
+        <img src="urano.jpg" alt="Urano en detalle">
+        
+        <h2>Eje de Rotación Inclinado</h2>
+        <p>Urano es único porque su eje de rotación está inclinado casi 98 grados, lo que significa que gira prácticamente de lado. Esto resulta en estaciones extremas, donde cada polo experimenta 42 años terrestres de luz solar constante, seguidos de 42 años de oscuridad.</p>
+        
+        <h2>Datos Clave</h2>
+        <ul>
+            <li>Tipo de cuerpo: Gigante de hielo</li>
+            <li>Diámetro: approx 51,118 km</li>
+            <li>Lunas: 27 lunas conocidas, nombradas en honor a personajes de Shakespeare y Pope.</li>
+            <li>Temperatura mínima: approx -224 C (El más frío del sistema)</li>
+            <li>Período de Órbita (Año): 84 años terrestres</li>
+        </ul>
+        
+        <h2>Composición</h2>
+        <p>Se le llama "gigante de hielo" porque está compuesto de una mezcla de agua, metano y amoníaco helados sobre un pequeño núcleo rocoso. El color azul-verdoso distintivo se debe a la absorción de luz roja por el metano en su atmósfera.</p>
+
+        <a href="index.html" class="back-button">← Regresar al Mapa Estelar</a>
+    </div>
+
+</body>
+</html>

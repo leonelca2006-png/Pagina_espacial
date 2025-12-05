@@ -1,0 +1,124 @@
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles: Júpiter</title>
+    <style>
+        /* CSS GENERAL (Se copia del index.html para que el estilo sea idéntico) */
+        body {
+            background-color: #2f1561; 
+            color: #e0f7fa; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            background-image: radial-gradient(circle, #ffffff 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: starMove 300s linear infinite; 
+        }
+
+        @keyframes starMove {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 100%; }
+        }
+
+        .header {
+            padding: 40px 20px;
+            background: linear-gradient(to bottom, #29036b, #371b4f); 
+            border-bottom: 2px solid #18148c; 
+        }
+
+        .header h1 {
+            font-size: 3em;
+            color: #ffcc00; 
+            text-shadow: 0 0 10px #ffcc00, 0 0 20px rgba(255, 204, 0, 0.5);
+        }
+
+        /* CSS ESPECÍFICO PARA LA VISTA DE DETALLE */
+        .detail-container {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 40px;
+            background-color: rgba(0, 0, 0, 0.3); 
+            box-shadow: 0 0 50px #ff980033; /* Sombra Naranja/Marrón */
+            border-radius: 20px;
+            text-align: left; 
+        }
+        
+        .detail-container.jupiter {
+             box-shadow: 0 0 50px rgba(255, 152, 0, 0.5); 
+        }
+
+        .detail-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            display: block; 
+            margin: 0 auto 30px auto; 
+        }
+        
+        .detail-container h2 {
+            color: #ffb74d; /* Color Naranja suave */
+            font-size: 2.5em;
+            margin-top: 0;
+            border-bottom: 2px solid #ffb74d;
+            padding-bottom: 10px;
+        }
+        
+        .detail-container p {
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        /* ESTILO DEL BOTÓN DE REGRESO */
+        .back-button {
+            display: inline-block; 
+            padding: 12px 25px; 
+            background-color: #56148c; 
+            color: #ffcc00; 
+            border-radius: 8px; 
+            margin-top: 30px; 
+            text-decoration: none; 
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        
+        .back-button:hover {
+            background-color: #790387;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>🔭 Júpiter: El Gigante Gaseoso y Rey del Sistema</h1>
+        <p>El planeta más grande, conocido por su Gran Mancha Roja y sus poderosas tormentas.</p>
+    </div>
+
+    <div class="detail-container jupiter">
+        
+        <img src="jupiter.jpg" alt="Júpiter en detalle">
+        
+        <h2>Atmósfera y La Gran Mancha Roja</h2>
+        <p>Júpiter está compuesto principalmente de "hidrógeno y helio", con nubes de amoníaco y agua. Su característica más famosa es la **Gran Mancha Roja**, una tormenta anticiclónica persistente que es más grande que la Tierra y que ha sido observada durante siglos. Júpiter tiene la rotación más rápida de todos los planetas, completando un día en $\approx \mathbf{10}$ horas terrestres.</p>
+        
+        <h2>Datos Clave</h2>
+        <ul>
+            <li>Tipo de cuerpo: Gigante gaseoso</li>
+            <li>Diámetro: approx 142,984 km (Más de 11 veces el de la Tierra)</li>
+            <li>Lunas: 95 lunas confirmadas, incluyendo las cuatro lunas galileanas: Ío, Europa, Ganímedes y Calisto.</li>
+            <li>Temperatura media: approx-145C</li>
+            <li>Período de Órbita (Año): 11.86 años terrestres</li>
+        </ul>
+        
+        <h2>El Sistema de Anillos</h2>
+        <p>Aunque no son tan prominentes como los de Saturno, Júpiter tiene un sistema de **anillos** débiles, compuestos principalmente de polvo levantado de sus lunas por impactos de meteoritos.</p>
+
+        <a href="index.html" class="back-button">← Regresar al Mapa Estelar</a>
+    </div>
+
+</body>
+</html>

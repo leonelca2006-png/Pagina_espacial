@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles: El Sol</title>
+    <style>
+        /* ==================================== */
+        /* === CSS GENERAL (BASE) === */
+        /* ==================================== */
+        
+        /* Estilos del cuerpo de la página (fondo espacial) */
+        body {
+            background-color: #2f1561; 
+            color: #e0f7fa; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            /* Simulación de estrellas con un patrón de fondo */
+            background-image: radial-gradient(circle, #ffffff 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: starMove 300s linear infinite; 
+        }
+
+        /* Definición de la animación para el movimiento de fondo (estrellas) */
+        @keyframes starMove {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 100%; }
+        }
+
+        /* Estilos del encabezado principal */
+        .header {
+            padding: 40px 20px;
+            background: linear-gradient(to bottom, #29036b, #371b4f); 
+            border-bottom: 2px solid #18148c; 
+        }
+
+        /* Estilos del título H1 en el encabezado */
+        .header h1 {
+            font-size: 3em;
+            color: #ffcc00; 
+            text-shadow: 0 0 10px #ffcc00, 0 0 20px rgba(255, 204, 0, 0.5);
+        }
+
+        /* ==================================== */
+        /* === CSS ESPECÍFICO PARA DETALLES === */
+        /* ==================================== */
+        
+        /* Contenedor principal de la información del planeta/estrella */
+        .detail-container {
+            max-width: 900px;
+            margin: 50px auto; /* Centra el contenedor y le da margen vertical */
+            padding: 40px;
+            background-color: rgba(0, 0, 0, 0.3); /* Fondo oscuro semitransparente */
+            border-radius: 20px;
+            box-shadow: 0 0 50px #ffcc0033; 
+            text-align: left; /* Alinea el texto del contenido a la izquierda */
+        }
+        
+        /* Estilo específico para el Sol (sombra amarilla intensa) */
+        .detail-container.sol {
+             box-shadow: 0 0 50px rgba(255, 204, 0, 0.5); 
+        }
+
+        /* Estilos para la imagen principal dentro del contenedor */
+        .detail-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            display: block; 
+            margin: 0 auto 30px auto; /* Centrar imagen horizontalmente */
+        }
+        
+        /* Estilos del subtítulo H2 de las secciones de detalle */
+        .detail-container h2 {
+            color: #ffcc00; /* Color amarillo (coherente con el Sol) */
+            font-size: 2.5em;
+            margin-top: 0;
+            border-bottom: 2px solid #ffcc00;
+            padding-bottom: 10px;
+        }
+        
+        /* Estilos para los párrafos de texto */
+        .detail-container p {
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        /* Estilos del botón para regresar al índice */
+        .back-button {
+            display: inline-block; /* Permite aplicar padding y transformaciones */
+            padding: 12px 25px; 
+            background-color: #56148c; 
+            color: #ffcc00; 
+            border-radius: 8px; 
+            margin-top: 30px; 
+            text-decoration: none; 
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.3s; /* Transición suave */
+        }
+        
+        /* Efecto al pasar el ratón sobre el botón */
+        .back-button:hover {
+            background-color: #790387;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>🌟 El Sol: La Forja de Nuestro Sistema ☀️</h1>
+        <p>Datos y características de nuestra estrella central.</p>
+    </div>
+
+    <div class="detail-container sol">
+        
+        <img src="sol.jpg.jpg" alt="El Sol en detalle">
+        
+        <h2>Fusión Nuclear y Composición</h2>
+        <p>El Sol es una estrella de tipo G, lo que significa que es de tamaño y temperatura medios. Está compuesto principalmente de hidrógeno (cerca del 74%) y helio (cerca del 24%), con trazas de otros elementos pesados. En su núcleo, la presión y la temperatura son tan extremas que ocurre la fusión nuclear, convirtiendo hidrógeno en helio y liberando la inmensa cantidad de energía que calienta todo el sistema.</p>
+        
+        <h2>Datos Clave</h2>
+        <ul>
+            <li>Tipo de cuerpo: Estrella (Enana amarilla)</li>
+            <li>Diámetro: approx 1.39 millones de km</li>
+            <li>Masa: approx 1.989 kg</li>
+            <li>Temperatura superficial: approx 5500 C$</li>
+            <li>Edad: approx 4.6$ mil millones de años</li>
+        </ul>
+        
+        <h2>La Atmósfera Solar</h2>
+        <p>La atmósfera del Sol se divide en tres capas principales: la fotosfera (la capa que vemos), la cromosfera (una capa más delgada y caliente), y la corona (el halo exterior de plasma que solo es visible durante un eclipse total).</p>
+
+        <a href="index.html" class="back-button">← Regresar al Mapa Estelar</a>
+    </div>
+
+    </body>
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+
+<html>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Asteroides</title>
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: url('images/estrellas.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: rgb(255, 255, 255);
+    }
+    .cuadro {
+      display: flex;
+      background-color: rgba(39, 39, 39, 0.308);
+      border-radius: 20px;
+      overflow: hidden;
+      max-width: 1000px;
+      width: 90%;
+      margin-bottom: 40px;
+    }
+    header {
+      text-align: center;
+      padding: 30px;
+      font-size: 35px;
+      font-weight: bold;
+      color: #ffffffb7;
+      text-shadow: 0 0 18px #0bcbec;
+    }
+
+    .cuadro {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 40px auto;
+      width: 85%;
+      gap: 20px;
+    }
+
+    .texto {
+      width: 80%;
+      font-size: 20px;
+      line-height: 1.6;
+      text-align: justify;
+      padding: 15px;
+    }
+
+    .imagen {
+      width: 35%;
+      text-align: center;
+    }
+
+    .imagen img {
+      width: 80%;
+      border-radius: 15px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .imagen img:hover {
+      transform: scale(1.08);
+      box-shadow: 0 0 45px oklab(88.224% 0.0213 -0.05808 / 0.8);
+    }
+    /* MENU LATERAL */
+    #menu-btn {
+      position: fixed;
+      left: 20px;
+      bottom: 20px;
+      background: #261dadad;
+      padding: 18px 24px;
+      border-radius: 60%;
+      cursor: pointer;
+      font-size: 30px;
+      box-shadow: 0 0 12px #1c2aa8;
+      transition: 0.3s;
+      z-index: 600;
+    }
+
+    #menu-btn:hover {
+      transform: scale(1.15);
+    }
+
+    #side-menu {
+      position: fixed;
+      top: 0;
+      left: -260px;
+      width: 300px;
+      height: 100%;
+      background: rgba(1, 0, 46, 0.95);
+      padding-top: 70px;
+      transition: 0.35s;
+      box-shadow: 5px 0 20px rgba(13, 1, 114, 0.4);
+    }
+
+    #side-menu a {
+      display: block;
+      padding: 18px 25px;
+      color: #cacdff;
+      font-size: 18px;
+      text-decoration: none;
+      transition: 0.2s;
+    }
+
+    #side-menu a:hover {
+      background: rgba(255,255,255,0.08);
+      padding-left: 20px;
+    }
+
+    @media (max-width: 850px) {
+      .cuadro {
+        flex-direction: column;
+        text-align: center;
+      }
+      .texto { width: 100%; }
+      .imagen img { width: 100%; }
+    }
+
+    
+
+  </style>
+</head>
+<!-- boton -->
+<div id="menu-btn" onclick="toggleMenu()">☰</div>
+
+<!-- barra -->
+<nav id="side-menu">
+  <a href="../agujeros_negros/principal2.html">Agujeros Negros</a>
+  <a href="../constelaciones_zodiaco/principal.html">Constelaciones del Zodíaco</a>
+  <a href="../estrellaslol/principal3v2.html">Evolución de las estrellas</a>
+  <a href="../pizza_planeta/index.html">Planetas</a>
+</nav>
+
+<script>
+  function toggleMenu() {
+    const menu = document.getElementById("side-menu");
+    menu.style.left = (menu.style.left === "0px") ? "-260px" : "0px";
+  }
+</script>
+
+
+<header> LOS ASTEROIDES DEL SISTEMA SOLAR </header>
+<body>
+    <!-- Lutecia asteroide -->
+<div class="cuadro" id="protoestrella">
+  <div class="texto">
+    <h2>1.- LUTECIA</h2>
+    <p>
+     (21) Lutecia es un asteroide perteneciente al cinturón de asteroides descubierto por Hermann Mayer Salomon Goldschmidt en 1852 desde París. 
+     Tiene forma irregular con un diámetro medio de 100 km. El 10 de julio de 2010 fue sobrevolado por la sonda espacial Rosetta 
+     que descubrió una superficie altamente craterizada y una masa menor de la estimada hasta ese momento.
+    </p>
+  </div>
+
+  <div class="imagen">
+    <img src="images/lutecia.jpg" alt="lutecia">
+  </div>
+</div>
+ <!-- Matihilde -->
+<div class="cuadro" id="secuencia">
+  <div class="texto">
+    <h2>2.- MATHILDE</h2>
+    <p>
+      (253) Mathilde es un asteroide,
+       situado en el cinturón de asteroides, 
+       que fue descubierto por Johann Palisa en 1885. 
+       Mathilde tiene una órbita relativamente elíptica, que requiere más de cuatro años para rodear el Sol. 
+       Este asteroide realiza una rotación relativamente muy lenta, ya que precisa de 17.4 días para girar sobre su eje. 
+       Es un asteroide de tipo C, lo que quiere decir que su superficie contiene una alta proporción de carbono, 
+       lo que le convierte en una superficie oscura que refleja solo el 4 % de la luz que incide sobre ella
+    </p>
+  </div>
+
+  <div class="imagen">
+    <img src="images/mathilde.jpg" alt="mathilde">
+  </div>
+</div>
+
+<!-- Vesta -->
+ <div class="cuadro" id="secuencia">
+  <div class="texto">
+    <h2>3.- VESTA </h2>
+    <p>
+      (4) Vesta es el segundo objeto con más masa del cinturón de asteroides y el tercero en tamaño, 
+     con un diámetro principal de unos 530 kilómetros
+     y una masa estimada del 9 % del cinturón de asteroides entero. 
+     Vesta perdió cerca del 1 % de su masa en un impacto ocurrido hace poco menos de mil millones de años. 
+     Muchos fragmentos de este impacto han chocado con la Tierra, constituyendo una fuente rica de información sobre el asteroide.
+     Vesta es el asteroide más brillante y el único en ocasiones visible a simple vista como un astro de sexta magnitud.
+     El punto más lejano en su órbita al Sol supera en no mucho al punto más cercano al sol de la órbita de Ceres.
+    </p>
+  </div>
+
+  <div class="imagen">
+    <img src="images/Vesta_full_mosaic.jpg" alt="Vesta_full_mosaic">
+  </div>
+</div>
+
+<!-- Ida -->
+  <div class="cuadro" id="secuencia">
+  <div class="texto">
+    <h2>4.- IDA </h2>
+    <p>
+     (243) Ida es un asteroide de la familia de Coronis situado en el cinturón principal de asteroides. 
+     Fue descubierto el 29 de septiembre de 1884 c por Johann Palisa y recibió el nombre de una ninfa de la mitología griega a propuesta de Moriz von Kuffner. 
+     Posteriores observaciones telescópicas clasificaron el asteroide Ida como un asteroide de tipo S, el segundo tipo más común en el cinturón de asteroides. 
+     El 28 de agosto de 1993, la sonda espacial Galileo visitó Ida de camino a Júpiter. Fue el segundo asteroide visitado por una nave espacial y el primero en que se confirmó la existencia de un satélite.
+    </p>
+  </div>
+
+  <div class="imagen">
+    <img src="images/ida.jpg" alt="ida">
+  </div>
+</div>
+</body>
+<!-- Eros -->
+ <!-- Ida -->
+  <div class="cuadro" id="secuencia">
+  <div class="texto">
+    <h2>5.- EROS </h2>
+    <p>
+     (433) Eros es un asteroide que forma parte de los asteroides Amor y fue descubierto por Carl Gustav Witt (1866-1946) en 1898. 
+     Tiene un perihelio de 1,1 UA, distancia que lo aproxima periódicamente a la Tierra, y es, por tanto, un asteroide próximo a la Tierra (NEA). 
+     Desde el punto de vista químico, está clasificado como un asteroide de tipo S, formado por asteroides compuestos de silicatos.
+    </p>
+  </div>
+
+  <div class="imagen">
+    <img src="images/eros.jpg" alt="eros">
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exploración del Sistema Solar</title>
+    <style>
+        /* ==================================== */
+        /* === 1. ESTILOS BASE DE PLANETAS === */
+        /* ==================================== */
+        
+        /* Estilos aplicados a todo el cuerpo de la página */
+        body {
+            background-color: #2f1561; /* Fondo espacial oscuro */
+            color: #e0f7fa; /* Color de texto claro */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            /* Simulación de estrellas con un gradiente radial */
+            background-image: radial-gradient(circle, #ffffff 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: starMove 300s linear infinite; /* Animación de las estrellas */
+        }
+
+        /* Definición de la animación para mover el fondo (estrellas) */
+        @keyframes starMove {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 100%; }
+        }
+
+        /* Estilos del encabezado principal */
+        .header {
+            padding: 40px 20px;
+            background: linear-gradient(to bottom, #29036b, #371b4f); /* Fondo con degradado */
+            border-bottom: 2px solid #18148c; 
+        }
+
+        /* Estilos del título principal H1 */
+        .header h1 {
+            font-size: 3em;
+            color: #ffcc00; /* Color dorado */
+            text-shadow: 0 0 10px #ffcc00, 0 0 20px rgba(255, 204, 0, 0.5); /* Efecto neón/brillo */
+        }
+
+        /* Contenedor flexible para todas las tarjetas de planetas */
+        .planets-container {
+            display: flex; /* Habilita flexbox */
+            justify-content: center; /* Centra las tarjetas horizontalmente */
+            flex-wrap: wrap; /* Permite que las tarjetas salten de línea */
+            padding: 50px 20px;
+        }
+
+        /* Estilos de cada tarjeta individual de planeta */
+        .planet-card {
+            background-color: rgba(255, 255, 255, 0.05); /* Fondo semitransparente */
+            border-radius: 15px;
+            margin: 20px;
+            padding: 20px;
+            width: 300px;
+            box-shadow: 0 0 25px rgba(19, 13, 125, 0.5); /* Sombra inicial */
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transición suave para el efecto hover */
+        }
+
+        /* Efecto al pasar el ratón sobre la tarjeta */
+        .planet-card:hover {
+            transform: translateY(-10px) scale(1.05); /* Levanta y agranda ligeramente */
+            box-shadow: 0 0 35px #0c0cf9, 0 0 50px #790387; /* Sombra más brillante/colorida */
+        }
+
+        /* Estilos del enlace dentro de la tarjeta */
+        .planet-card a {
+            text-decoration: none; /* Quita el subrayado del enlace */
+            color: inherit; /* Hereda el color del texto de la tarjeta */
+            display: block; /* Ocupa todo el espacio de la tarjeta */
+        }
+        
+        /* Estilos de la imagen del planeta dentro de la tarjeta */
+        .planet-card img {
+            width: 100%; 
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            filter: brightness(1.1) saturate(1.1);
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Sección de información adicional al pie de página */
+        .info-section {
+            padding: 50px 20px;
+            background-color: #00000f;
+            border-top: 2px solid #56148c;
+        }
+
+        /* Estilos del título en la sección de información */
+        .info-section h2 {
+            color: #1e1160; 
+            margin-bottom: 20px;
+        }
+
+        /* ==================================== */
+        /* === 2. ESTILOS DEL MENÚ LATERAL === */
+        /* ==================================== */
+        
+        /* Estilos del botón flotante para abrir el menú */
+        #menu-btn {
+            position: fixed; /* Posición fija en la pantalla */
+            left: 20px;
+            top: 20px;
+            background: #4db8ff;
+            padding: 12px 14px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            box-shadow: 0 0 12px #4db8ff;
+            transition: 0.3s;
+            z-index: 999; /* Asegura que esté por encima de todo */
+        }
+
+        /* Efecto al pasar el ratón sobre el botón */
+        #menu-btn:hover {
+            transform: scale(1.15);
+        }
+
+        /* Estilos del contenedor del menú lateral */
+        #side-menu {
+            position: fixed;
+            top: 0;
+            left: -260px; /* Posición inicial: oculto a la izquierda */
+            width: 260px;
+            height: 100%;
+            background: rgba(28, 0, 46, 0.95); /* Fondo oscuro semitransparente */
+            padding-top: 70px;
+            transition: 0.35s; /* Transición para el deslizamiento */
+            box-shadow: 5px 0 20px rgba(0,0,0,0.4);
+            z-index: 990; /* Detrás del botón pero encima del contenido principal */
+        }
+
+        /* Estilos de los enlaces dentro del menú lateral */
+        #side-menu a {
+            display: block;
+            padding: 18px 25px;
+            color: #e8caff;
+            font-size: 18px;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+
+        /* Efecto hover en los enlaces del menú */
+        #side-menu a:hover {
+            background: rgba(255,255,255,0.08);
+            padding-left: 35px; /* Deslizamiento al pasar el ratón */
+        }
+
+        /* Sobreescribimos la propiedad z-index del header para que no tape el botón */
+        .header {
+            z-index: 900; 
+            position: relative;
+        }
+        
+        /* Media query de ejemplo para responsividad (no tiene efecto directo en este código) */
+        @media (max-width: 850px) {
+            .cuadro {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="menu-btn" onclick="toggleMenu()">☰</div>
+
+    <nav id="side-menu">
+        <a href="index.html"> Inicio (Sistema Solar)</a> 
+        <a href="../agujeros_negros/principal2.html">Agujeros Negros</a>
+        <a href="../constelaciones_zodiaco/principal.html">Constelaciones del Zodíaco</a>
+        <a href="../estrellaslol/principal3v2.html">Evolución de las estrellas</a>
+        <a href="../asteroides/principal1415.html">Asteroides</a>
+    </nav>
+
+
+    <div class="header">
+        <h1> Exploración Cósmica: Nuestro Sistema Solar </h1>
+        
+    </div>
+
+    <div class="planets-container">
+
+        <div class="planet-card">
+            <a href="sol.html">
+                <img src="sol.jpg.jpg" alt="El Sol">
+                <h2>El Sol</h2>
+            </a>
+            <p>La estrella central del sistema. Es una gigantesca esfera de plasma que genera luz y calor.</p>
+            <p> Dato Curioso: Su masa representa el 99.8% de la masa total del Sistema Solar.</p>
+        </div>
+
+        <div class="planet-card">
+            <a href="mercurio.html">
+                <img src="mercurio.jpg" alt="Mercurio"> 
+                <h2>Mercurio</h2>
+            </a>
+            <p>El planeta más pequeño y cercano al Sol. Es un mundo rocoso con temperaturas extremas.</p>
+            <p> Dato Curioso: Un día en Mercurio es más largo que su año.</p>
+        </div>
+
+        <div class="planet-card">
+            <a href="venus.html">
+                <img src="venus.jpg" alt="Venus"> 
+                <h2>Venus</h2>
+            </a>
+            <p>Conocido por su atmósfera densa que provoca un efecto invernadero descontrolado, siendo el planeta más caliente.</p>
+            <p> Dato Curioso: Gira en dirección contraria a la mayoría de los planetas.</p>
+        </div>
+
+        <div class="planet-card">
+            <a href="tierra.html">
+                <img src="tierra.jpg" alt="La Tierra">
+                <h2>La Tierra</h2>
+            </a>
+            <p>El único lugar conocido que alberga vida, con un 71% de su superficie cubierta por agua líquida.</p>
+            <p> Dato Curioso: La atmósfera terrestre nos protege de la radiación solar y los meteoroides.</p>
+        </div>
+
+        <div class="planet-card">
+            <a href="marte.html">
+                <img src="marte.jpg" alt="Marte">
+                <h2>Marte</h2>
+            </a>
+            <p>Conocido como el Planeta Rojo. Es el foco principal de la exploración por la posible existencia de agua helada.</p>
+            <p>Dato Curioso: Posee el volcán más grande conocido, el Monte Olimpo.</p>
+        </div>
+
+        <div class="planet-card">
+            <a href="jupiter.html">
+                <img src="jupiter.jpg" alt="Júpiter">
+                <h2>Júpiter</h2>
+            </a>
+            <p>El gigante gaseoso y el planeta más grande. Su característica más famosa es la Gran Mancha Roja.</p>
+            <p> Dato Curioso: Su rotación es la más rápida de todos los planetas, completando un día en solo 10 horas terrestres.</p>
+        </div>
+
+        <div class="planet-card">
+            <a href="saturno.html">
+                <img src="saturno.jpg" alt="Saturno">
+                <h2>Saturno</h2>
+            </a>
+            <p>Famoso por su espectacular sistema de anillos compuestos de hielo y roca.</p>
+            <p> Dato Curioso: Tiene más de 145 lunas conocidas, incluyendo a Titán.</p>
+        </div>
+
+        <div class="planet-card">
+            <a href="urano.html">
+                <img src="urano.jpg" alt="Urano">
+                <h2>Urano</h2>
+            </a>
+            <p>Un gigante de hielo. Es único porque su eje de rotación está inclinado casi 98 grados, girando de lado.</p>
+            <p> Dato Curioso: Cada polo recibe 42 años terrestres de luz solar y 42 años de oscuridad.</p>
+        </div>
+
+        <div class="planet-card">
+            <a href="neptuno.html">
+                <img src="neptuno.jpg" alt="Neptuno">
+                <h2>Neptuno</h2>
+            </a>
+            <p>El planeta más lejano y el más denso de los gigantes de hielo. Es conocido por tener los vientos más fuertes.</p>
+            <p> Dato Curioso: Fue el primer planeta descubierto por cálculo matemático y no por observación.</p>
+        </div>
+
+    </div>
+
+    <div class="info-section">
+        <h2> ¿Qué es el Sistema Solar?</h2>
+        <p>El Sistema Solar es el sistema planetario en el que se encuentran la Tierra y otros objetos astronómicos que giran alrededor de una única estrella conocida como el Sol. Incluye **8 planetas** principales, **5 planetas enanos**, incontables lunas, asteroides y cometas. Todo está unido por la fuerza de la **gravedad**.</p>
+    </div>
+
+    <script>
+        // JS para evitar la alerta que teníamos antes (solo para consola)
+        window.onload = function() {
+            console.log("¡Módulo de exploración principal cargado y enlaces activos!");
+        };
+        
+        // FUNCIÓN para mostrar u ocultar el menú lateral
+        function toggleMenu() {
+            const menu = document.getElementById("side-menu");
+            // Lógica para cambiar la posición 'left' del menú
+            menu.style.left = (menu.style.left === "0px") ? "-260px" : "0px";
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Evolución de las Estrellas — Pixel + Holograma</title>
+
+<!-- Fuentes: VT323 (pixel retro), Orbitron (títulos), Inter (texto) -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Orbitron:wght@400;700&family=VT323&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg-1: #050014;
+    --bg-2: #140026;
+    --glass: rgba(255,255,255,0.04);
+    --accent-1: #c38bff; /* violeta holo */
+    --accent-2: #d9b8ff;
+    --accent-3: #7a49ff;
+    --text: #efe9ff;
+    --muted: #c9bfe8;
+    --pixel: #9cf0ff;
+    --crt: rgba(255,255,255,0.03);
+  }
+
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;font-family:Inter, Arial, sans-serif;background:linear-gradient(180deg,var(--bg-1),var(--bg-2));color:var(--text);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
+
+  /* Background layers */
+  .bg-wrap{position:fixed;inset:0;z-index:-40;pointer-events:none}
+  .bg-image{position:absolute;inset:0;background:url('estrellaslol/images/starbackground.png') center/cover no-repeat;filter:brightness(.55) contrast(.95)}
+  .bg-nebula{position:absolute;inset:0;background:radial-gradient(40% 30% at 20% 25%, rgba(195,139,255,0.12), transparent 15%), radial-gradient(40% 30% at 80% 75%, rgba(184,125,255,0.08), transparent 18%);filter:blur(18px)}
+  .bg-particles{position:absolute;inset:0;background-image:radial-gradient(#fff 1px, transparent 1px);background-size:48px 48px;opacity:0.04}
+
+  /* CRT scanlines and slight noise */
+  .scanlines{pointer-events:none;position:fixed;inset:0;background:repeating-linear-gradient(to bottom,var(--crt) 0px, rgba(255,255,255,0.01) 2px, transparent 3px);mix-blend-mode:screen;opacity:0.55;z-index:30}
+  .noise{position:fixed;inset:0;pointer-events:none;background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200"><filter id="n"><feTurbulence baseFrequency="0.8" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter><rect width="100%" height="100%" filter="url(%23n)" opacity="0.03" /></svg>');opacity:0.06;mix-blend-mode:overlay;z-index:29}
+
+  /* Container */
+  .container{max-width:1100px;margin:36px auto;padding:20px;position:relative;z-index:10}
+
+  /* Header / Title with glitch + hologram */
+  header{display:flex;flex-direction:column;align-items:center;gap:8px;margin-bottom:18px}
+  h1{
+    font-family:Orbitron, sans-serif;
+    font-weight:700;
+    font-size:clamp(1.6rem,3.2vw,2.4rem);
+    color:var(--text);
+    letter-spacing:1.8px;
+    text-transform:uppercase;
+    position:relative;
+    margin:0;
+    padding:6px 14px;
+  }
+  /* Glitch layers */
+  h1::before, h1::after{
+    content:attr(data-text);
+    position:absolute;left:0;top:0;width:100%;height:100%;overflow:hidden;clip:rect(0,9999px,0,0);
+  }
+  h1::before{color:var(--accent-2);transform:translate(2px,-1px);opacity:0.85;mix-blend-mode:screen}
+  h1::after{color:var(--accent-3);transform:translate(-2px,1px);opacity:0.65;mix-blend-mode:screen}
+  .title-glitch{animation:glitch 3.6s infinite;display:inline-block}
+  @keyframes glitch{
+    0%{transform:none}
+    7%{transform:translate(-1px,0)}
+    14%{transform:translate(2px,-1px)}
+    21%{transform:none}
+    28%{transform:translate(-2px,1px)}
+    35%{transform:none}
+    100%{transform:none}
+  }
+  p.lead{margin:0;color:var(--muted);max-width:760px;text-align:center;line-height:1.45;font-size:1rem}
+
+  /* HUD panel wrapper */
+  .hud{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:12px;padding:14px;border:1px solid rgba(195,139,255,0.08);box-shadow:0 8px 28px rgba(8,4,20,0.6);backdrop-filter:blur(6px);}
+
+  /* Timeline */
+  .timeline{position:relative;margin-top:24px;padding-left:64px}
+  .timeline::before{content:"";position:absolute;left:30px;top:12px;bottom:12px;width:6px;background:linear-gradient(180deg,var(--accent-3),var(--accent-1));border-radius:4px;box-shadow:0 0 20px rgba(195,139,255,0.12)}
+  
+  .event{position:relative;margin:30px 0;padding:20px 20px 20px 84px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));border:1px solid rgba(200,160,255,0.04);transition:transform .5s cubic-bezier(.2,.9,.2,1),box-shadow .35s,opacity .45s;opacity:0;transform:translateY(18px)}
+  .event.in-view{opacity:1;transform:translateY(0);box-shadow:0 18px 48px rgba(6,2,20,0.6)}
+
+  /* Pixel number badge */
+  .dot{position:absolute;left:-4px;top:18px;width:56px;height:56px;border-radius:8px;background:linear-gradient(180deg,var(--accent-1),var(--accent-3));display:flex;align-items:center;justify-content:center;color:#09000b;font-weight:700;font-family:VT323, monospace;font-size:1.6rem;box-shadow:0 6px 26px rgba(195,139,255,0.14)}
+  .tag{display:inline-block;margin-bottom:8px;padding:6px 10px;border-radius:6px;background:rgba(255,255,255,0.02);color:var(--accent-2);font-weight:700;font-family:VT323, monospace;font-size:0.88rem;border:1px solid rgba(195,139,255,0.06)}
+
+  .event h3{margin:4px 0 10px 0;color:var(--text);font-size:1.05rem;font-weight:700;font-family:Orbitron, sans-serif}
+  .event p.desc{margin:0;color:var(--muted);line-height:1.45;font-size:0.98rem}
+  .event .media{margin-top:12px;display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap}
+  .event .media img{width:260px;max-width:42%;border-radius:8px;box-shadow:0 10px 32px rgba(184,125,255,0.06);transition:transform .22s,filter .22s;filter:brightness(.95) saturate(1.04)}
+  .event .media img:hover{transform:scale(1.03);filter:brightness(1.06) saturate(1.12)}
+  .event .meta{font-size:0.88rem;color:var(--muted);margin-top:8px}
+
+  /* Datacard / more info expandable */
+  .datacard{margin-top:12px;background:rgba(255,255,255,0.02);border-radius:8px;padding:10px;border:1px solid rgba(195,139,255,0.04);display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center}
+  .datacard .info{font-size:0.9rem;color:var(--muted)}
+  .datacard button{background:transparent;border:1px solid rgba(195,139,255,0.06);color:var(--accent-2);padding:6px 10px;border-radius:8px;cursor:pointer;font-family:VT323,monospace}
+  .datacard .extra{margin-top:8px;color:var(--muted);font-size:0.9rem;display:none}
+  .datacard.open .extra{display:block}
+
+  /* mini diagram (simple svg look) */
+  .diagram{display:inline-block;padding:6px 8px;border-radius:6px;background:rgba(255,255,255,0.02);border:1px solid rgba(195,139,255,0.05);font-family:VT323,monospace;color:var(--pixel);font-size:0.86rem}
+
+  /* Footer / credits */
+  footer{margin-top:28px;text-align:center;color:var(--muted);font-size:0.9rem}
+
+  /* Responsive tweaks */
+  @media (max-width:920px){
+    .event{padding:16px 14px 16px 76px}
+    .dot{left:-18px}
+    .event .media{flex-direction:column}
+    .event .media img{max-width:100%;width:100%}
+    .timeline{padding-left:40px}
+    .timeline::before{left:14px}
+  }
+
+  /* MENU LATERAL (fort style) */
+  #menu-btn{position:fixed;left:18px;top:18px;width:48px;height:48px;border-radius:10px;background:linear-gradient(180deg,var(--accent-1),var(--accent-3));color:#fff;display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;box-shadow:0 8px 26px rgba(184,125,255,0.18);z-index:100}
+  #side-menu{position:fixed;top:0;left:-300px;width:300px;height:100%;background:rgba(6,2,20,0.96);padding-top:84px;transition:0.32s;box-shadow:8px 0 38px rgba(0,0,0,0.6);z-index:99}
+  #side-menu a{display:block;padding:16px 24px;color:var(--muted);text-decoration:none;font-size:1rem;border-left:4px solid transparent;transition:all .22s}
+  #side-menu a:hover{background:linear-gradient(90deg, rgba(195,139,255,0.06), rgba(213,168,255,0.03));padding-left:32px;border-left-color:var(--accent-2);color:var(--accent-2);text-shadow:0 0 10px rgba(195,139,255,0.08)}
+</style>
+</head>
+
+<body>
+
+  <div class="bg-wrap" aria-hidden="true">
+    <div class="bg-image"></div>
+    <div class="bg-nebula"></div>
+    <div class="bg-particles"></div>
+  </div>
+
+  <div class="scanlines" aria-hidden="true"></div>
+  <div class="noise" aria-hidden="true"></div>
+
+  <!-- Lateral menu -->
+  <div id="menu-btn" onclick="toggleMenu()">☰</div>
+  <nav id="side-menu" aria-label="Navegación del proyecto">
+    <a href="../agujeros_negros/principal2.html">Agujeros Negros</a>
+    <a href="../constelaciones_zodiaco/principal.html">Constelaciones</a>
+    <a href="../asteroides/principal1415.html">Asteroides</a>
+    <a href="../pizza_planeta/index.html">Planetas</a>
+    <a href="principal3v2.html">Estrellas (actual)</a>
+  </nav>
+
+  <main class="container">
+    <header>
+      <div class="hud">
+        <h1 class="title-glitch" data-text="Evolución de las Estrellas">Evolución de las Estrellas</h1>
+        <p class="lead">Recorrido ampliado con contexto científico, datos técnicos y curiosidades. Interactúa con las tarjetas para ver más detalles y diagramas rápidos.</p>
+      </div>
+    </header>
+
+    <section class="hud timeline" aria-label="Línea del tiempo de la evolución estelar">
+
+      <!-- Event 1 -->
+      <article class="event" id="e1">
+        <div class="dot">01</div>
+        <div>
+          <div class="tag">Fase</div>
+          <h3>Protoestrella</h3>
+          <p class="desc">Una nube molecular colapsa bajo su propia gravedad. El material acumulado forma un núcleo en contracción donde la temperatura y densidad aumentan hasta condiciones próximas a la ignición nuclear.</p>
+
+          <div class="media">
+            <img src="images/protoestelar.jpg" alt="Protoestrella">
+            <div>
+              <div class="meta">Características técnicas: densidades ~10^-17 a 10^-13 g/cm³, temperaturas internas crecientes desde 10 K a varios miles de K.</div>
+
+              <div class="datacard">
+                <div class="info">
+                  <strong>Curiosidad</strong><br>
+                  Los discos protoplanetarios que pueden formarse aquí son los cimientos de futuros planetas.
+                </div>
+                <button class="more-btn" aria-expanded="false">VER MÁS</button>
+                <div class="extra">
+                  <p>Mini-diagrama: <span class="diagram">Nube → Núcleo → Disco</span></p>
+                  <p>Proceso: colapso gravitacional, pérdida de momento angular mediante fricción e interacción magnética.</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Event 2 -->
+      <article class="event" id="e2">
+        <div class="dot">02</div>
+        <div>
+          <div class="tag">Fase</div>
+          <h3>Secuencia Principal</h3>
+          <p class="desc">La estrella alcanza equilibrio hidrostático: la presión de radiación por fusión compensa la gravedad. Aquí la estrella quema hidrógeno en su núcleo estabilidad que puede durar desde millones a miles de millones de años según su masa.</p>
+
+          <div class="media">
+            <img src="images/secuenciaprincipal.jpg" alt="Secuencia Principal">
+            <div>
+              <div class="meta">Dato técnico: La tasa de fusión depende fuertemente de la masa; una estrella más masiva consume combustible mucho más rápido.</div>
+
+              <div class="datacard">
+                <div class="info"><strong>Curiosidad</strong><br>El Sol está actualmente en esta fase y lleva ~4.6 mil millones de años en ella.</div>
+                <button class="more-btn" aria-expanded="false">VER MÁS</button>
+                <div class="extra">
+                  <p>Mini-diagrama: <span class="diagram">H → He (fusión, p-p chain / CNO)</span></p>
+                  <p>Comentario: Estrellas masivas usan el ciclo CNO, estrellas como el Sol usan p-p fusion.</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Event 3 -->
+      <article class="event" id="e3">
+        <div class="dot">03</div>
+        <div>
+          <div class="tag">Fenómeno</div>
+          <h3>Sistemas Binarios</h3>
+          <p class="desc">Dos (o más) estrellas orbitan alrededor del centro de masa común. Las interacciones pueden incluir transferencia de masa, fusiones, o supernovas inducidas por pérdida de masa.</p>
+
+          <div class="media">
+            <img src="images/sistemabinario.webp" alt="Sistema binario">
+            <div>
+              <div class="meta">Dato técnico: Los periodos orbitales y la distancia determinan si habrá intercambio de materia (Roche lobe overflow).</div>
+
+              <div class="datacard">
+                <div class="info"><strong>Curiosidad</strong><br>Algunas supernovas (tipo Ia) provienen de sistemas binarios con enanas blancas acumulando masa.</div>
+                <button class="more-btn" aria-expanded="false">VER MÁS</button>
+                <div class="extra">
+                  <p>Mini-diagrama: <span class="diagram">Estrella A ↔ Estrella B → transferencia</span></p>
+                  <p>Aplicación: Estudio de binarias permite medir masas estelares con precisión.</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Event 4 -->
+      <article class="event" id="e4">
+        <div class="dot">04</div>
+        <div>
+          <div class="tag">Transformación</div>
+          <h3>Gigante Roja / Supergigante</h3>
+          <p class="desc">Al agotarse el hidrógeno, la estrella expande su envoltura y la temperatura superficial baja. En el núcleo comienzan fusiones de elementos más pesados en capas concéntricas.</p>
+
+          <div class="media">
+            <img src="images/supergigante.jpg" alt="Supergigante Roja">
+            <div>
+              <div class="meta">Dato técnico: Las capas de fusión sucesivas generan elementos hasta hierro en estrellas masivas.</div>
+
+              <div class="datacard">
+                <div class="info"><strong>Curiosidad</strong><br>Las supergigantes pueden perder masa por fuertes vientos estelares, alterando su evolución.</div>
+                <button class="more-btn" aria-expanded="false">VER MÁS</button>
+                <div class="extra">
+                  <p>Mini-diagrama: <span class="diagram">Capas: H → He → C → O → Si → Fe</span></p>
+                  <p>Nota: Cuando se forma Fe en el núcleo, no se obtiene energía mediante fusión, lo que conduce al colapso.</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Event 5 -->
+      <article class="event" id="e5">
+        <div class="dot">05</div>
+        <div>
+          <div class="tag">Explosión</div>
+          <h3>Supernova</h3>
+          <p class="desc">El colapso del núcleo provoca una onda de choque que expulsa las capas exteriores, liberando una enorme cantidad de energía y produciendo elementos más pesados por nucleosíntesis.</p>
+
+          <div class="media">
+            <img src="images/supernova.jpg" alt="Supernova">
+            <div>
+              <div class="meta">Dato técnico: Supernovas enriquecen el medio interestelar con hierro, oro y elementos pesados.</div>
+
+              <div class="datacard">
+                <div class="info"><strong>Curiosidad</strong><br>La visibilidad de una supernova puede rivalizar con la galaxia entera en brillo por semanas.</div>
+                <button class="more-btn" aria-expanded="false">VER MÁS</button>
+                <div class="extra">
+                  <p>Mini-diagrama: <span class="diagram">Colapso → Onda de choque → Expulsión</span></p>
+                  <p>Impacto: Formación de nebulosas de remanente que siembran estrellas de siguiente generación.</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Event 6 -->
+      <article class="event" id="e6">
+        <div class="dot">06</div>
+        <div>
+          <div class="tag">Remanente</div>
+          <h3>Enana Blanca</h3>
+          <p class="desc">Cuando la estrella no tiene masa suficiente para colapsar en estrella de neutrones o agujero negro, queda un núcleo denso que se enfría lentamente: la enana blanca.</p>
+
+          <div class="media">
+            <img src="images/enanablanca.jpg" alt="Enana Blanca">
+            <div>
+              <div class="meta">Dato técnico: Tamaño comparable al de la Tierra, densidad extremadamente alta y sostenida por presión de degeneración electrónica.</div>
+
+              <div class="datacard">
+                <div class="info"><strong>Curiosidad</strong><br>Algunas enanas blancas pueden volver a brillar si acumulan material de una compañera en sistemas binarios.</div>
+                <button class="more-btn" aria-expanded="false">VER MÁS</button>
+                <div class="extra">
+                  <p>Mini-diagrama: <span class="diagram">Núcleo denso • Enfriamiento</span></p>
+                  <p>Nota: El límite de Chandrasekhar (~1.4 M☉) determina si puede convertirse en supernova tipo Ia.</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Event 7 -->
+      <article class="event" id="e7">
+        <div class="dot">07</div>
+        <div>
+          <div class="tag">Colapso</div>
+          <h3>Estrella de Neutrones</h3>
+          <p class="desc">Si tras la supernova queda un núcleo muy masivo, los electrones y protones se fusionan en neutrones, dando lugar a una estrella extremadamente densa, con radios de ~10 km y masas ~1.4-2.1 M☉.</p>
+
+          <div class="media">
+            <img src="images/neutron.jpg" alt="Estrella de Neutrones">
+            <div>
+              <div class="meta">Dato técnico: Rotaciones rápidas y campos magnéticos intensos; pueden manifestarse como pulsares.</div>
+
+              <div class="datacard">
+                <div class="info"><strong>Curiosidad</strong><br>Una cucharadita de materia de estrella de neutrones pesaría millones de toneladas en la Tierra.</div>
+                <button class="more-btn" aria-expanded="false">VER MÁS</button>
+                <div class="extra">
+                  <p>Mini-diagrama: <span class="diagram">Neutrones compactos • Pulsar</span></p>
+                  <p>Aplicación: Observaciones de púlsares ayudan a estudiar relatividad y materia nuclear.</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Event 8 -->
+      <article class="event" id="e8">
+        <div class="dot">08</div>
+        <div>
+          <div class="tag">Final</div>
+          <h3>Agujero Negro (si aplica)</h3>
+          <p class="desc">Si la masa remanente sobrepasa ciertos límites, la gravedad domina por completo y se crea un agujero negro, una región del espacio con un horizonte de sucesos del que ni la luz puede escapar.</p>
+
+          <div class="media">
+            <img src="images/blackhole.webp" alt="Agujero Negro">
+            <div>
+              <div class="meta">Dato técnico: Los agujeros negros se caracterizan por su masa, momento angular y carga; los supermasivos pueden tener millones a miles de millones de veces la masa solar.</div>
+
+              <div class="datacard">
+                <div class="info"><strong>Curiosidad</strong><br>Los agujeros negros no "absorben" todo instantáneamente; su interacción con materia produce discos de acreción y jets relativistas.</div>
+                <button class="more-btn" aria-expanded="false">VER MÁS</button>
+                <div class="extra">
+                  <p>Mini-diagrama: <span class="diagram">Horizonte → Disco de acreción → Jets</span></p>
+                  <p>Nota: Observaciones directas del horizonte son recientes (Event Horizon Telescope).</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </article>
+
+    </section>
+
+    <footer class="hud" role="contentinfo">
+      <p>Proyecto PC POM-2 — Módulo Evolución Estelar • Recursos: Imágenes y datos simplificados para propósito educativo. Créditos a las fuentes astronómicas públicas.</p>
+    </footer>
+  </main>
+
+<script>
+  // Toggle lateral menu
+  function toggleMenu(){
+    const menu = document.getElementById('side-menu');
+    menu.style.left = (menu.style.left === '0px') ? '-300px' : '0px';
+  }
+
+  // Intersection Observer para animar eventos al entrar en viewport
+  document.addEventListener('DOMContentLoaded', () => {
+    const events = document.querySelectorAll('.event');
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('in-view');
+        }
+      });
+    }, {threshold: 0.18});
+    events.forEach(ev => obs.observe(ev));
+
+    // DATACARD expand / collapse
+    document.querySelectorAll('.datacard').forEach(card => {
+      const btn = card.querySelector('.more-btn');
+      const extra = card.querySelector('.extra');
+      btn.addEventListener('click', () => {
+        const open = card.classList.toggle('open');
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+    });
+
+    // Slight title "micro-glitch" randomization
+    const title = document.querySelector('.title-glitch');
+    setInterval(() => {
+      title.style.opacity = (Math.random() > 0.98) ? '0.88' : '1';
+    }, 1000);
+
+    // Tooltips (simple: show mini info on dot hover)
+    document.querySelectorAll('.dot').forEach(d => {
+      d.addEventListener('mouseenter', () => {
+        d.style.transform = 'translateY(-4px) scale(1.03)';
+      });
+      d.addEventListener('mouseleave', () => {
+        d.style.transform = 'none';
+      });
+    });
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles: Neptuno</title>
+    <style>
+        /* CSS GENERAL (Se copia del index.html para que el estilo sea idéntico) */
+        body {
+            background-color: #2f1561; 
+            color: #e0f7fa; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            background-image: radial-gradient(circle, #ffffff 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: starMove 300s linear infinite; 
+        }
+
+        @keyframes starMove {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 100%; }
+        }
+
+        .header {
+            padding: 40px 20px;
+            background: linear-gradient(to bottom, #29036b, #371b4f); 
+            border-bottom: 2px solid #18148c; 
+        }
+
+        .header h1 {
+            font-size: 3em;
+            color: #ffcc00; 
+            text-shadow: 0 0 10px #ffcc00, 0 0 20px rgba(255, 204, 0, 0.5);
+        }
+
+        /* CSS ESPECÍFICO PARA LA VISTA DE DETALLE */
+        .detail-container {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 40px;
+            background-color: rgba(0, 0, 0, 0.3); 
+            box-shadow: 0 0 50px #1a237e33; /* Sombra Azul Oscura */
+            border-radius: 20px;
+            text-align: left; 
+        }
+        
+        .detail-container.neptuno {
+             box-shadow: 0 0 50px rgba(26, 35, 126, 0.5); 
+        }
+
+        .detail-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            display: block; 
+            margin: 0 auto 30px auto; 
+        }
+        
+        .detail-container h2 {
+            color: #3f51b5; /* Color Azul Índigo */
+            font-size: 2.5em;
+            margin-top: 0;
+            border-bottom: 2px solid #3f51b5;
+            padding-bottom: 10px;
+        }
+        
+        .detail-container p {
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        /* ESTILO DEL BOTÓN DE REGRESO */
+        .back-button {
+            display: inline-block; 
+            padding: 12px 25px; 
+            background-color: #56148c; 
+            color: #ffcc00; 
+            border-radius: 8px; 
+            margin-top: 30px; 
+            text-decoration: none; 
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        
+        .back-button:hover {
+            background-color: #790387;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>💨 Neptuno: El Planeta Más Lejano y Viento</h1>
+        <p>El último planeta conocido y el poseedor de los vientos más rápidos del Sistema Solar.</p>
+    </div>
+
+    <div class="detail-container neptuno">
+        
+        <img src="neptuno.jpg" alt="Neptuno en detalle">
+        
+        <h2>Vientos Ultrarrápidos</h2>
+        <p>Neptuno es conocido por tener los vientos más fuertes del Sistema Solar, con ráfagas registradas de hasta 2,100 km/h. Tiene sistemas de tormentas masivos, como la extinta Gran Mancha Oscura observada por la Voyager 2. Es un gigante de hielo, similar a Urano, con metano en su atmósfera que le da un color azul profundo.</p>
+        
+        <h2>Datos Clave</h2>
+        <ul>
+            <li>Tipo de cuerpo: Gigante de hielo</li>
+            <li>Diámetro: approx 49,244 km</li>
+            <li>Lunas: 16 lunas confirmadas, siendo Tritón la más grande.</li>
+            <li>Temperatura media: approx -201 C</li>
+            <li>Descubrimiento: El primer planeta descubierto mediante predicción matemática, no por observación telescópica.</li>
+        </ul>
+        
+        <h2>Tritón: La Luna Retrógrada</h2>
+        <p>La luna más grande de Neptuno, Tritón, tiene una órbita retrógrada (gira en dirección opuesta a la rotación del planeta), lo que sugiere que fue capturada por la gravedad de Neptuno, y no que se formó in situ.</p>
+
+        <a href="index.html" class="back-button">← Regresar al Mapa Estelar</a>
+    </div>
+
+</body>
+</html>

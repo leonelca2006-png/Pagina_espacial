@@ -1,0 +1,92 @@
+
+
+/* COMENTARIO: Estilos generales para el fondo y la fuente */
+body {
+    background-color: #2f1561; /* Fondo azul oscuro que simula el espacio */
+    color: #e0f7fa; /* Texto de color claro (casi blanco/azul claro) */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+/* COMENTARIO: Estilo del encabezado principal */
+.header {
+    padding: 40px 20px;
+    background: linear-gradient(to bottom, #29036b, #371b4f); /* Gradiente sutil */
+    border-bottom: 2px solid #18148c; /* Línea divisoria morada */
+}
+
+/* COMENTARIO: Estilo del título */
+.header h1 {
+    font-size: 3em;
+    color: #ffcc00; /* Color dorado/amarillo para destacar */
+    /* Efecto de sombra para que el texto se vea "brillante" */
+    text-shadow: 0 0 10px #ffcc00, 0 0 20px rgba(255, 204, 0, 0.5);
+}
+
+/* COMENTARIO: Estilo para la sección de contenido de los planetas */
+.planets-container {
+    display: flex; /* Usamos Flexbox para organizar los planetas en una fila */
+    justify-content: center; /* Centrar los elementos horizontalmente */
+    flex-wrap: wrap; /* Permite que los elementos salten a la siguiente línea si no caben */
+    padding: 50px 20px;
+}
+
+/* COMENTARIO: Estilo de cada tarjeta de planeta */
+.planet-card {
+    background-color: rgba(255, 255, 255, 0.05); /* Fondo semitransparente sutil */
+    border-radius: 15px;
+    margin: 20px;
+    padding: 20px;
+    width: 300px;
+    box-shadow: 0 0 25px rgba(19, 13, 125, 0.5); /* Sombra morada estilo "neón" */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transición para el efecto hover */
+}
+
+/* COMENTARIO: Efecto de movimiento al pasar el ratón (¡Chido/Fantástico!) */
+.planet-card:hover {
+    transform: translateY(-10px) scale(1.05); /* Se levanta y agranda ligeramente */
+    box-shadow: 0 0 35px #0c0cf9, 0 0 50px #790387; /* Sombra más intensa */
+}
+
+/* COMENTARIO: Estilo de la imagen del planeta */
+.planet-card img {
+    width: 100%; /* La imagen ocupa el ancho de la tarjeta */
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    /* COMENTARIO: Filtro para darle un brillo extra a las imágenes */
+    filter: brightness(1.1) saturate(1.1);
+    
+    /* ESTILOS DE CENTRADO APLICADOS */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* COMENTARIO: Estilo para la animación del fondo (los "estrellas" que se mueven) */
+@keyframes starMove {
+    0% { background-position: 0% 0%; }
+    100% { background-position: 100% 100%; }
+}
+
+/* COMENTARIO: Aplicamos la animación al cuerpo para simular el movimiento sutil de las estrellas */
+body {
+    /* Creamos un fondo de estrellas con un patrón repetitivo */
+    background-image: radial-gradient(circle, #ffffff 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: starMove 300s linear infinite; /* Animación lenta y constante */
+}
+
+/* COMENTARIO: Estilo para la sección de información adicional */
+.info-section {
+    padding: 50px 20px;
+    background-color: #00000f;
+    border-top: 2px solid #56148c;
+}
+
+.info-section h2 {
+    color: #1e1160; /* Color cian brillante */
+    margin-bottom: 20px;
+}

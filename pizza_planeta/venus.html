@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles: Venus</title>
+    <style>
+        /* CSS GENERAL (Se copia del index.html para que el estilo sea idéntico) */
+        body {
+            background-color: #2f1561; 
+            color: #e0f7fa; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            background-image: radial-gradient(circle, #ffffff 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: starMove 300s linear infinite; 
+        }
+
+        @keyframes starMove {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 100%; }
+        }
+
+        .header {
+            padding: 40px 20px;
+            background: linear-gradient(to bottom, #29036b, #371b4f); 
+            border-bottom: 2px solid #18148c; 
+        }
+
+        .header h1 {
+            font-size: 3em;
+            color: #ffcc00; 
+            text-shadow: 0 0 10px #ffcc00, 0 0 20px rgba(255, 204, 0, 0.5);
+        }
+
+        /* CSS ESPECÍFICO PARA LA VISTA DE DETALLE */
+        .detail-container {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 40px;
+            background-color: rgba(0, 0, 0, 0.3); 
+            border-radius: 20px;
+            box-shadow: 0 0 50px #ff572233; /* Sombra Naranja/Roja */
+            text-align: left; 
+        }
+        
+        .detail-container.venus {
+             box-shadow: 0 0 50px rgba(255, 87, 34, 0.5); 
+        }
+
+        .detail-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            display: block; 
+            margin: 0 auto 30px auto; 
+        }
+        
+        .detail-container h2 {
+            color: #ff7043; /* Color Naranja */
+            font-size: 2.5em;
+            margin-top: 0;
+            border-bottom: 2px solid #ff7043;
+            padding-bottom: 10px;
+        }
+        
+        .detail-container p {
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        /* ESTILO DEL BOTÓN DE REGRESO */
+        .back-button {
+            display: inline-block; 
+            padding: 12px 25px; 
+            background-color: #56148c; 
+            color: #ffcc00; 
+            border-radius: 8px; 
+            margin-top: 30px; 
+            text-decoration: none; 
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        
+        .back-button:hover {
+            background-color: #790387;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>🔥 Venus: El Horno Planetario</h1>
+        <p>El planeta más caliente debido a su atmósfera y efecto invernadero descontrolado.</p>
+    </div>
+
+    <div class="detail-container venus">
+        
+        <img src="venus.jpg" alt="Venus en detalle">
+        
+        <h2>Efecto Invernadero Descontrolado</h2>
+        <p>Venus es el planeta más caliente del Sistema Solar, con una temperatura superficial de approx 471 C. Esto se debe a su densa atmósfera, compuesta principalmente de "CO_2" y nubes de ácido sulfúrico, que atrapan el calor de forma muy eficiente, creando un efecto invernadero descontrolado. Por esta razón, su superficie es un mundo árido y volcánico.</p>
+        
+        <h2>Datos Clave</h2>
+        <ul>
+            <li>Tipo de cuerpo: Planeta terrestre</li>
+            <li>Diámetro: approx 12,104 km (Casi del tamaño de la Tierra)</li>
+            <li>Lunas: Ninguna</li>
+            <li>Temperatura media: approx 471 C$</li>
+            <li>Rotación (Día): 243 días terrestres</li>
+        </ul>
+        
+        <h2>Rotación Retrógrada</h2>
+        <p>Venus es único porque gira sobre su eje en dirección retrógrada (de este a oeste), a diferencia de la mayoría de los planetas. Además, su período de rotación (approx 243$ días) es más largo que su período orbital (approx 225$ días), lo que significa que un día en Venus es más largo que su año.</p>
+
+        <a href="index.html" class="back-button">← Regresar al Mapa Estelar</a>
+    </div>
+
+</body>
+</html>
